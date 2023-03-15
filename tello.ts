@@ -26,7 +26,7 @@ namespace TELLO {
             }
             if (input.runningTime() - time > 1500) break
         }
-        basic.showString(serial_str)
+        //basic.showString(serial_str)
         return result
     }
 
