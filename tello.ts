@@ -70,7 +70,7 @@ namespace TELLO {
         udp_connected = waitResponse()
         basic.pause(100)
     }
-    //% block="Send UDP command|command  %command|number of bytes  %bytes"
+    //% block="Send UDP|command  %command|number of bytes  %bytes"
     //% command.defl=
     //% bytes.defl=
     export function Send_command(command: string, bytes: string) {
@@ -81,10 +81,10 @@ namespace TELLO {
         basic.pause(100)
     }
 
-    //% block="Recieve UDP Message"
+    //% block="Receive UDP Message"
     //% command.defl=
     //% bytes.defl=
-    export function Recieve_command() {
+    export function Receive_command() {
         return getResponse()
     }
 }
