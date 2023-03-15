@@ -24,10 +24,16 @@ namespace TELLO {
             } else if (serial_str.includes("ERROR") || serial_str.includes("SEND FAIL")) {
                 break
             }
-            if (input.runningTime() - time > 30000) break
+            if (input.runningTime() - time > 1500) break
         }
+        basic.showString(serial_str)
         return result
     }
+
+    function getResponse(): string {
+        return serial.readString()
+    }
+
     //% block="Wifi connected ?"
     export function isWifiConnected() {
         return wifi_connected
@@ -68,8 +74,17 @@ namespace TELLO {
     //% command.defl=
     //% bytes.defl=
     export function Send_command(command: string, bytes: string) {
+        let executed: boolean = false
         sendAT("AT+CIPSEND=" + bytes + "")
         serial.writeString(command + "\u000D\u000A")
-        basic.pause(1000)
+        executed = waitResponse()
+        basic.pause(100)
+    }
+
+    //% block="Recieve UDP Message"
+    //% command.defl=
+    //% bytes.defl=
+    export function Recieve_command() {
+        return getResponse()
     }
 }
