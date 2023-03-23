@@ -31,7 +31,24 @@ namespace TELLO {
     }
 
     function getResponse(): string {
-        return serial.readString()
+        //return serial.readString()
+
+        let serial_str: string = ""
+        let result: boolean = false
+        let time: number = input.runningTime()
+        while (true) {
+            serial_str += serial.readString()
+            if (serial_str.length > 200) serial_str = serial_str.substr(serial_str.length - 200)
+            if (serial_str.includes("OK") || serial_str.includes("ALREADY CONNECTED")) {
+                result = true
+                break
+            } else if (serial_str.includes("ERROR") || serial_str.includes("SEND FAIL")) {
+                break
+            }
+            if (input.runningTime() - time > 1500) break
+        }
+        //basic.showString(serial_str)
+        return serial_str
     }
 
     //% block="Wifi connected ?"
